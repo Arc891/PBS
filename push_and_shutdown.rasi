@@ -13,7 +13,7 @@ configuration {
     sidebar-mode: 		            false;
 }
 
-@import "~/.dotfiles/pbs/arc_dark_transparent_colors.rasi"
+@import "~/.dotfiles/PBS/arc_dark_transparent_colors.rasi"
 
 window {
     background-color:               @background;

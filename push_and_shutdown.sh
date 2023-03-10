@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-PBS="~/.dotfiles/pbs/"
+PBS="/home/$USER/.dotfiles/PBS"
 
 yes="   Git Push and Shutdown"
 no="         Shutdown"
@@ -17,8 +17,19 @@ $no" | rofi -dmenu\
             -scrollbar-width "0" )
 
 if [ "$selected_option" == "$yes" ]; then
-    xfce4-terminal -x $PBS/push_all_repos.sh;
-    systemctl poweroff;
+    alacritty -e $PBS/push_all_repos.sh &
+    # echo "PID:$!";
+    # wait $!;
+    PID=$!
+    while true; do
+        if ps $PID > /dev/null ; then
+            echo '';
+        else 
+            break;
+        fi
+    done;
+    echo "Shutting down...";
+    # systemctl poweroff;
 elif [ "$selected_option" == "$no" ]; then
     echo "Poweroff selected";
     systemctl poweroff;
