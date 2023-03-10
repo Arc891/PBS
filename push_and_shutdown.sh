@@ -18,8 +18,6 @@ $no" | rofi -dmenu\
 
 if [ "$selected_option" == "$yes" ]; then
     alacritty -e $PBS/push_all_repos.sh &
-    # echo "PID:$!";
-    # wait $!;
     PID=$!
     while true; do
         if ps $PID > /dev/null ; then
@@ -29,7 +27,7 @@ if [ "$selected_option" == "$yes" ]; then
         fi
     done;
     echo "Shutting down...";
-    # systemctl poweroff;
+    systemctl poweroff;
 elif [ "$selected_option" == "$no" ]; then
     echo "Poweroff selected";
     systemctl poweroff;
