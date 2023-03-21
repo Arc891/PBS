@@ -11,14 +11,11 @@ find_repos() {
     if [ -f $REPOS_FILE ]; then
         cat $REPOS_FILE;
         read -p "Do you want to update this list of repos? [y/N] " conf;
-        if   [ "$conf" == "n" ] || [ "$conf" == "N" ]; then
+        if   [ "$conf" == "y" ] || [ "$conf" == "Y" ]; then
+            echo "Looking for all repos...";
+        else 
             echo "Stopped updating repos file."
             return;
-        elif [ "$conf" != "y" ] && [ "$conf" != "Y" ]; then
-            echo "Invalid option, aborting...";
-            return;
-        else 
-            echo "Looking for all repos...";
         fi
     fi
 
@@ -73,7 +70,12 @@ push_repos() {
         fi
 
         echo "In repo $d";
+        status=$(git status);
         git status;
+
+        if [[ "$status" == *"nothing to commit"* ]]; then
+            continue;
+        fi
 
         read -p "What to add? [A]ll/[f]ast add & push/[s]pecific/[n]one: " to_add;
         
@@ -108,6 +110,12 @@ push_repos() {
 }
 
 find_repos;
-sleep 1;
-read -p "Continue? [y/n]: " conf;
-[ "$conf" == "y" ] && push_repos || echo "Aborting pushes...";
+read -p "Continue? [Y/f(ast)/n]: " conf;
+
+if   [ "$conf" == "f" ] || [ "$conf" == "F" ]; then
+    push_repos -f;
+elif [ "$conf" != "n" ] && [ "$conf" != "N" ]; then
+    push_repos 
+else
+    echo "Aborting pushes...";
+fi

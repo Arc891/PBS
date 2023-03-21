@@ -21,16 +21,16 @@ if [ "$selected_option" == "$yes" ]; then
     PID=$!
     while true; do
         if ps $PID > /dev/null ; then
-            echo '';
+            true;
         else 
             break;
         fi
     done;
     echo "Shutting down...";
-    systemctl poweroff;
+    # systemctl poweroff;
 elif [ "$selected_option" == "$no" ]; then
     echo "Poweroff selected";
-    systemctl poweroff;
+    # systemctl poweroff;
 else
     echo "No match"
     # echo "for '$selected_option' ('$yes' and '$no')"
