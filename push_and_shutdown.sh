@@ -27,10 +27,10 @@ if [ "$selected_option" == "$yes" ]; then
         fi
     done;
     echo "Shutting down...";
-    # systemctl poweroff;
+    systemctl poweroff;
 elif [ "$selected_option" == "$no" ]; then
     echo "Poweroff selected";
-    # systemctl poweroff;
+    systemctl poweroff;
 else
     echo "No match"
     # echo "for '$selected_option' ('$yes' and '$no')"
